@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { ActivityIndicator } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { useRoute } from '@react-navigation/native';
 // import RNShake from 'react-native-shake';
@@ -11,7 +10,6 @@ import Background from './../../components/Background';
 // import { Container } from './styles';
 
 export default function Main() {
-  const [load, setLoad] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const route = useRoute();
@@ -30,14 +28,6 @@ export default function Main() {
   useEffect(() => {
     startLoading();
   }, [routeParams]);
-
-  function startLoad() {
-    setLoad(true);
-  }
-
-  function stopLoad() {
-    setLoad(false);
-  }
 
   useEffect(() => {
     ShakeEventExpo.addListener(() => {
@@ -61,19 +51,13 @@ export default function Main() {
 
   return (
     <Background>
-      <ActivityIndicator size="large" bool={{load}} />
-
       <Spinner
         visible={loading}
         textContent={'Carregando...'}
         textStyle={{ color: '#FFF' }}
       />
 
-      <WebView
-        source={{ uri: routeParams.url }}
-        onLoadStart={startLoad}
-        onLoad={stopLoad}
-      />
+      <WebView source={{ uri: routeParams.url }} />
     </Background>
   );
 }
