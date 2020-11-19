@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   View,
-  Dimensions,
   StyleSheet,
   Image,
   Text,
@@ -75,8 +74,6 @@ export default function Main() {
 
   const routeParams = route.params;
 
-  const deviceWidth = Dimensions.get("window").width;
-
   function toggleModal() {
     setModalVisible(!isModalVisible);
   };
@@ -86,7 +83,7 @@ export default function Main() {
     setTimeout(() => {
       setLoading(false);
       setModalVisible(true);
-    }, 3000);
+    }, 5000);
   };
 
   useEffect(() => {
@@ -126,7 +123,6 @@ export default function Main() {
       <Modal
         isVisible={isModalVisible}
         swipeDirection="down"
-        deviceWidth={deviceWidth}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
