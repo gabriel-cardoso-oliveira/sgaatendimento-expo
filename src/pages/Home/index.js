@@ -107,7 +107,7 @@ export default function Main() {
         textStyle={{ color: '#FFF' }}
       />
 
-      <WebView source={{ uri: routeParams.url }} />
+      <WebView source={{ uri: routeParams.url }} style={{ marginTop: 20 }} />
 
       <Modal
         isVisible={isModalVisible}
