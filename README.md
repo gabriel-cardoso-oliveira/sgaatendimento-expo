@@ -4,7 +4,9 @@
 ### [⚡ Play Store](https://play.google.com/store/apps/details?id=com.campotv.sgaatendimento)
 ### [⚡️ App Store](https://apps.apple.com/us/app/sga-atendimento/id1538819172)
 
-![Home](./assets/01.png)
+<p align="center">
+  <img src="./assets/01.png" width="300" />
+</p>
 
 ## Detalhes
 
@@ -14,11 +16,18 @@ Para editar o endereço, basta chacoalhar o dispositivo.
 
 ## Página de Configuração
 
-![Config](./assets/02.png)
+<p align="center">
+  <img src="./assets/02.png" width="300" />
+</p>
 
 ## Modal de Aviso
 
-![Modal](./assets/03.png)
+<p align="center">
+  <img src="./assets/03.png" width="300" />
+</p>
 
 ## WebView
-![Webview](./assets/04.png)
+
+<p align="center">
+  <img src="./assets/04.png" width="300" />
+</p>
