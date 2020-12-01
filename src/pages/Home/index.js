@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { useRoute } from '@react-navigation/native';
-// import RNShake from 'react-native-shake';
 import { useNavigation } from '@react-navigation/native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Modal from 'react-native-modal';
@@ -74,7 +73,7 @@ export default function Main() {
 
   const routeParams = route.params;
 
-  function toggleModal() {
+  const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
 
@@ -100,16 +99,6 @@ export default function Main() {
     }
   }, [])
 
-  // useEffect(() => {
-  //   RNShake.addEventListener('ShakeEvent', () => {
-  //     navigation.navigate('Config');
-  //   });
-
-  //   return () => {
-  //     RNShake.removeEventListener('ShakeEvent');
-  //   }
-  // }, [])
-
   return (
     <Background>
       <Spinner
@@ -118,7 +107,7 @@ export default function Main() {
         textStyle={{ color: '#FFF' }}
       />
 
-      <WebView source={{ uri: routeParams.url }} />
+      <WebView source={{ uri: routeParams.url }} style={{ marginTop: 20 }} />
 
       <Modal
         isVisible={isModalVisible}
