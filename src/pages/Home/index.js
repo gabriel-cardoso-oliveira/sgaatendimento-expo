@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Image,
   Text,
+  Platform,
   TouchableOpacity,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
@@ -61,6 +62,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontSize: 16,
   },
+
+  marginViewIos: {
+    marginTop: 20,
+  },
+
+  marginViewAndroid: {
+    marginTop: 0,
+  },
 });
 
 export default function Main() {
@@ -107,7 +116,12 @@ export default function Main() {
         textStyle={{ color: '#FFF' }}
       />
 
-      <WebView source={{ uri: routeParams.url }} style={{ marginTop: 20 }} />
+      <WebView
+        source={{ uri: routeParams.url }}
+        style={
+          Platform.OS === 'ios' ? styles.marginViewIos : styles.marginViewAndroid
+        }
+      />
 
       <Modal
         isVisible={isModalVisible}
