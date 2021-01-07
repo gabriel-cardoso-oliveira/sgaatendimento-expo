@@ -106,7 +106,7 @@ export default function Main() {
     return () => {
       ShakeEventExpo.removeListener();
     }
-  }, [])
+  }, []);
 
   return (
     <Background>
