@@ -20,8 +20,12 @@ export default function Config() {
     try {
       await AsyncStorage.setItem('@storage_url', url);
 
-      navigation.navigate('Home', {
-        url,
+      navigation.reset({
+        index: 0,
+        routes: [{
+          name: 'Home',
+          params: { url },
+        }],
       });
     } catch (error) {
 

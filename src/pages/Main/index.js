@@ -19,14 +19,25 @@ export default function Main() {
       setUrl(getUrl);
 
       if (!getUrl) {
-        return navigation.navigate('Config');
+        // return navigation.navigate('Config');
+        return navigation.reset({
+          index: 0,
+          routes: [{ name: 'Config' }],
+        });
       }
 
-      navigation.navigate('Home', {
-        url: getUrl,
+      navigation.reset({
+        index: 0,
+        routes: [{
+          name: 'Home',
+          params: { url: getUrl },
+        }],
       });
     } catch (error) {
-      navigation.navigate('Config');
+      return navigation.reset({
+        index: 0,
+        routes: [{ name: 'Config' }],
+      });
     }
   }
 
