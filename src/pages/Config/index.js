@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image } from 'react-native';
+import { Image, StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {
@@ -20,8 +20,12 @@ export default function Config() {
     try {
       await AsyncStorage.setItem('@storage_url', url);
 
-      navigation.navigate('Home', {
-        url,
+      navigation.reset({
+        index: 0,
+        routes: [{
+          name: 'Home',
+          params: { url },
+        }],
       });
     } catch (error) {
 
@@ -38,6 +42,8 @@ export default function Config() {
 
   return (
     <Background>
+      <StatusBar hidden={true} />
+
       <Container>
         <Image style={{ width: 110, height: 110 }} source={logo} />
         <Form>

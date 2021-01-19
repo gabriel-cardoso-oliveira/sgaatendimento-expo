@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image } from 'react-native';
+import { Image, StatusBar } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import Background from './../../components/Background';
@@ -19,14 +19,24 @@ export default function Main() {
       setUrl(getUrl);
 
       if (!getUrl) {
-        return navigation.navigate('Config');
+        return navigation.reset({
+          index: 0,
+          routes: [{ name: 'Config' }],
+        });
       }
 
-      navigation.navigate('Home', {
-        url: getUrl,
+      navigation.reset({
+        index: 0,
+        routes: [{
+          name: 'Home',
+          params: { url: getUrl },
+        }],
       });
     } catch (error) {
-      navigation.navigate('Config');
+      return navigation.reset({
+        index: 0,
+        routes: [{ name: 'Config' }],
+      });
     }
   }
 
@@ -36,10 +46,11 @@ export default function Main() {
 
   return (
     <Background>
+      <StatusBar hidden={true} />
+
       <Container>
         <Image style={{ width: 110, height: 110 }} source={logo} />
       </Container>
     </Background>
-    // <Image style={{ width: 110, height: 110 }} source={logo} />
   );
 }

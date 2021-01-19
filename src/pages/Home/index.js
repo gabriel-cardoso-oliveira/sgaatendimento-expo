@@ -4,8 +4,8 @@ import {
   StyleSheet,
   Image,
   Text,
-  Platform,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { useRoute } from '@react-navigation/native';
@@ -62,14 +62,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontSize: 16,
   },
-
-  marginViewIos: {
-    marginTop: 20,
-  },
-
-  marginViewAndroid: {
-    marginTop: 0,
-  },
 });
 
 export default function Main() {
@@ -110,18 +102,15 @@ export default function Main() {
 
   return (
     <Background>
+      <StatusBar hidden={true} />
+
       <Spinner
         visible={loading}
         textContent={'Carregando...'}
         textStyle={{ color: '#FFF' }}
       />
 
-      <WebView
-        source={{ uri: routeParams.url }}
-        style={
-          Platform.OS === 'ios' ? styles.marginViewIos : styles.marginViewAndroid
-        }
-      />
+      <WebView source={{ uri: routeParams.url }} />
 
       <Modal
         isVisible={isModalVisible}
