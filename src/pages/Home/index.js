@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,6 +6,8 @@ import {
   Text,
   TouchableOpacity,
   StatusBar,
+  Vibration,
+  Animated,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { useRoute } from '@react-navigation/native';
@@ -23,19 +25,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#3b9eff'
   },
-
   modalText: {
     fontSize: 16,
     lineHeight: 24,
     marginTop: 20,
     marginBottom: 6,
   },
-
   centeredView: {
     flex: 1,
     marginTop: 22
   },
-
   modalView: {
     margin: 20,
     backgroundColor: "white",
@@ -51,22 +50,29 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5
   },
-
   opacityLink: {
     marginTop: 16,
   },
-
   opacityLinkText: {
     color: '#8985F2',
     fontWeight: 'bold',
     alignSelf: 'center',
     fontSize: 16,
   },
+  warningText: {
+    fontSize: 26,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: '#fff'
+  },
 });
 
 export default function Main() {
+  const anim = useRef(new Animated.Value(0));
+
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
+  const [isWarning, setIsWarning] = useState(false);
 
   const route = useRoute();
 
@@ -83,7 +89,7 @@ export default function Main() {
     setTimeout(() => {
       setLoading(false);
       setModalVisible(true);
-    }, 5000);
+    }, 3000);
   };
 
   useEffect(() => {
@@ -100,6 +106,45 @@ export default function Main() {
     }
   }, []);
 
+  const shake = useCallback(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(anim.current, {
+          toValue: -4,
+          duration: 50,
+          useNativeDriver: true,
+        }),
+        Animated.timing(anim.current, {
+          toValue: 4,
+          duration: 50,
+          useNativeDriver: true,
+        }),
+        Animated.timing(anim.current, {
+          toValue: 0,
+          duration: 50,
+          useNativeDriver: true,
+        }),
+      ]),
+      { iterations: 2 }
+    ).start();
+  }, []);
+
+  const onResultWebView = event => {
+    if (event.nativeEvent.title === 'SGA *') {
+      setIsWarning(true);
+      shake();
+      return Vibration.vibrate();
+    }
+
+    setIsWarning(false);
+  };
+
+  const INJECTED_JAVASCRIPT = `(function() {
+    setInterval(function() {
+      window.ReactNativeWebView.postMessage(JSON.stringify(document.title));
+    }, 1500);
+  })();`;
+
   return (
     <Background>
       <StatusBar hidden={true} />
@@ -110,7 +155,18 @@ export default function Main() {
         textStyle={{ color: '#FFF' }}
       />
 
-      <WebView source={{ uri: routeParams.url }} />
+      <WebView
+        source={{ uri: routeParams.url }}
+        onMessage={onResultWebView}
+        injectedJavaScript={INJECTED_JAVASCRIPT}
+      />
+
+      <Animated.View style={{ transform: [{ translateX: anim.current }] }}>
+        { isWarning ? (
+            <Text style={styles.warningText}>NOVA SENHA</Text>
+          ) : null
+        }
+      </Animated.View>
 
       <Modal
         isVisible={isModalVisible}
