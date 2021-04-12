@@ -73,6 +73,7 @@ export default function Main() {
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [isWarning, setIsWarning] = useState(false);
+  const [countVibration, setCountVibration] = useState(0);
 
   const route = useRoute();
 
@@ -129,20 +130,34 @@ export default function Main() {
     ).start();
   }, []);
 
-  const onResultWebView = event => {
-    if (event.nativeEvent.title === 'SGA *') {
-      setIsWarning(true);
-      shake();
+  const vibrate = () => {
+    if (countVibration === 1) {
       return Vibration.vibrate();
     }
 
+    if (countVibration === Number(routeParams.seconds)) {
+      setCountVibration(0);
+      return Vibration.vibrate();
+    }
+  };
+
+  const onResultWebView = event => {
+    // if (event.nativeEvent.title === 'DISCORD | Seu Lugar para Conversar e Ficar De Boa') {
+    if (event.nativeEvent.title === 'SGA *') {
+      setIsWarning(true);
+      shake();
+      setCountVibration(countVibration + 1);
+      return vibrate();
+    }
+
+    setCountVibration(0);
     setIsWarning(false);
   };
 
   const INJECTED_JAVASCRIPT = `(function() {
     setInterval(function() {
       window.ReactNativeWebView.postMessage(JSON.stringify(document.title));
-    }, 1500);
+    }, 1000);
   })();`;
 
   return (

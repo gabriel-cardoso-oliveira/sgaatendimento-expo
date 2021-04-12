@@ -9,16 +9,19 @@ import { Container } from './styles';
 
 export default function Main() {
   const [url, setUrl] = useState('');
+  const [notice, setNotice] = useState('');
 
   const navigation = useNavigation();
 
   async function init() {
     try {
       const getUrl = await AsyncStorage.getItem('@storage_url');
+      const getNotice = await AsyncStorage.getItem('@storage_notice');
 
       setUrl(getUrl);
+      setNotice(getNotice);
 
-      if (!getUrl) {
+      if (!getUrl || !getNotice) {
         return navigation.reset({
           index: 0,
           routes: [{ name: 'Config' }],
@@ -29,7 +32,10 @@ export default function Main() {
         index: 0,
         routes: [{
           name: 'Home',
-          params: { url: getUrl },
+          params: {
+            url: getUrl,
+            seconds: getNotice,
+          },
         }],
       });
     } catch (error) {
