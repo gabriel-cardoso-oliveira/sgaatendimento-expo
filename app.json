@@ -2,7 +2,7 @@
   "expo": {
     "name": "SGA Atendimento",
     "slug": "sgaatendimento",
-    "version": "1.0.5",
+    "version": "1.1.0",
     "orientation": "default",
     "icon": "./assets/icon.png",
     "splash": {
@@ -19,7 +19,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.campotv.sgaatendimento",
-      "buildNumber": "1.0.5"
+      "buildNumber": "1.1.0"
     },
     "android": {
       "adaptiveIcon": {
@@ -27,7 +27,7 @@
         "backgroundColor": "#3e3e3e"
       },
       "package": "com.campotv.sgaatendimento",
-      "versionCode": 2,
+      "versionCode": 3,
       "permissions": []
     },
     "web": {
