@@ -87,10 +87,11 @@ export default function Main() {
 
   const startLoading = () => {
     setLoading(true);
+
     setTimeout(() => {
       setLoading(false);
       setModalVisible(true);
-    }, 3000);
+    }, 4500);
   };
 
   useEffect(() => {
