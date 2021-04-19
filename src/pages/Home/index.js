@@ -8,6 +8,8 @@ import {
   StatusBar,
   Vibration,
   Animated,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { useRoute } from '@react-navigation/native';
@@ -156,6 +158,8 @@ export default function Main() {
   };
 
   const INJECTED_JAVASCRIPT = `(function() {
+    document.body.style.zoom = "${routeParams.zoom}%";
+
     setInterval(function() {
       window.ReactNativeWebView.postMessage(JSON.stringify(document.title));
     }, 1000);
@@ -171,11 +175,17 @@ export default function Main() {
         textStyle={{ color: '#FFF' }}
       />
 
-      <WebView
-        source={{ uri: routeParams.url }}
-        onMessage={onResultWebView}
-        injectedJavaScript={INJECTED_JAVASCRIPT}
-      />
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        enabled={Platform.OS === 'ios'}
+        behavior="padding"
+      >
+        <WebView
+          source={{ uri: routeParams.url }}
+          onMessage={onResultWebView}
+          injectedJavaScript={INJECTED_JAVASCRIPT}
+        />
+      </KeyboardAvoidingView>
 
       <Animated.View style={{ transform: [{ translateX: anim.current }] }}>
         { isWarning ? (
