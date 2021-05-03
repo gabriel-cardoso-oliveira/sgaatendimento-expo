@@ -171,8 +171,8 @@ export default function Main() {
   };
 
   const onResultWebView = event => {
-    if (event.nativeEvent.title === 'DISCORD | Seu Lugar para Conversar e Ficar De Boa') {
-    // if (event.nativeEvent.title === 'SGA *') {
+    // if (event.nativeEvent.title === 'DISCORD | Seu Lugar para Conversar e Ficar De Boa') {
+    if (event.nativeEvent.title === 'SGA *') {
       setIsWarning(true);
       shake();
       setCountVibration(countVibration + 1);
