@@ -16,6 +16,9 @@ import { useRoute } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Modal from 'react-native-modal';
+import * as Speech from 'expo-speech';
+import * as BackgroundFetch from 'expo-background-fetch';
+import * as TaskManager from 'expo-task-manager';
 import { ShakeEventExpo } from './../../utils/ShakeEventExpo';
 import Background from './../../components/Background';
 import logo from './../../assets/shake.png';
@@ -83,6 +86,19 @@ export default function Main() {
 
   const routeParams = route.params;
 
+  BackgroundFetch.setMinimumIntervalAsync(1);
+
+  const taskName = 'background-alert'
+
+  const speak = () => {
+    if (routeParams.warningSound === 'Ativado') {
+      const thingToSay = 'Atenção. Nova senha!';
+      return Speech.speak(thingToSay);
+    }
+
+    return;
+  };
+
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
@@ -110,6 +126,14 @@ export default function Main() {
     }
   }, []);
 
+  const registerTaskAsync = async () => {
+    await BackgroundFetch.registerTaskAsync(taskName);
+  };
+
+  useEffect(() => {
+    registerTaskAsync();
+  }, []);
+
   const shake = useCallback(() => {
     Animated.loop(
       Animated.sequence([
@@ -135,11 +159,13 @@ export default function Main() {
 
   const vibrate = () => {
     if (countVibration === 1) {
+      speak();
       return Vibration.vibrate();
     }
 
     if (countVibration === Number(routeParams.seconds)) {
-      setCountVibration(0);
+      setCountVibration(2);
+      speak();
       return Vibration.vibrate();
     }
   };
@@ -164,6 +190,26 @@ export default function Main() {
       window.ReactNativeWebView.postMessage(JSON.stringify(document.title));
     }, 1000);
   })();`;
+
+  TaskManager.defineTask(taskName, ({ data, error }) => {
+    if (error) {
+      return;
+    }
+
+    if (data) {
+      const onResultWebView = event => {
+        if (event.nativeEvent.title === 'SGA *') {
+          setIsWarning(true);
+          shake();
+          setCountVibration(countVibration + 1);
+          return vibrate();
+        }
+    
+        setCountVibration(0);
+        setIsWarning(false);
+      };
+    }
+  });
 
   return (
     <Background>

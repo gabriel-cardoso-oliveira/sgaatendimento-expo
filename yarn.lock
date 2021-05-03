@@ -2540,6 +2540,13 @@ expo-av@~8.6.0:
     lodash "^4.17.15"
     nullthrows "^1.1.0"
 
+expo-background-fetch@~8.5.0:
+  version "8.5.0"
+  resolved "https://registry.yarnpkg.com/expo-background-fetch/-/expo-background-fetch-8.5.0.tgz#6f263d2b51bf168418e14c716dae87a2bbf3769a"
+  integrity sha512-4YQ60I8COmfCIanj0579QrloD2CZ7N7fOu5ZCC4BQ2wLnPrepv+/9NrElpWl+M9VaTicmmBt+w5KqEwVjTHg0g==
+  dependencies:
+    expo-task-manager "~8.5.0"
+
 expo-constants@~9.2.0:
   version "9.2.0"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-9.2.0.tgz#e86a38793deaff9018878afac65bce2543c80a4c"
@@ -2613,6 +2620,11 @@ expo-sensors@~9.1.0:
   dependencies:
     invariant "^2.2.4"
 
+expo-speech@~8.4.0:
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/expo-speech/-/expo-speech-8.4.0.tgz#8ab20d0eef017864838f5760282e8c02b010dce4"
+  integrity sha512-7AFZIBZh9yeM4J50KOmS3NOG8h8Hst5m0589F+y7Vc5UfKhrM6n4Y8IUa8+PuBv3YFtNcG80We4m1UDSHIza9Q==
+
 expo-splash-screen@^0.6.1:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/expo-splash-screen/-/expo-splash-screen-0.6.2.tgz#2be7fc28ad62549e870c69f1fe133ebe756c524f"
@@ -2632,6 +2644,13 @@ expo-status-bar@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/expo-status-bar/-/expo-status-bar-1.0.2.tgz#2441a77c56be31597898337b0d086981f2adefd8"
   integrity sha512-5313u744GcLzCadxIPXyTkYw77++UXv1dXCuhYDxDbtsEf93iMra7WSvzyE8a7mRQLIIPRuGnBOdrL/V1C7EOQ==
+
+expo-task-manager@~8.5.0:
+  version "8.5.0"
+  resolved "https://registry.yarnpkg.com/expo-task-manager/-/expo-task-manager-8.5.0.tgz#8d4d192937a10f046cc4d7a5346f1a69dbacc939"
+  integrity sha512-5r0k9m7sY802pGjC/HtFchEG1oiOEScuSOA1jgsbaiC6qXyxKEOGNLBcjtvmI5BAKuSkGBC4dmxyL8sWCRLTAg==
+  dependencies:
+    unimodules-app-loader "~1.3.0"
 
 expo@~39.0.2:
   version "39.0.3"
@@ -4615,7 +4634,7 @@ promise@^8.0.3:
   dependencies:
     asap "~2.0.6"
 
-prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -4737,6 +4756,13 @@ react-native-screens@~2.10.1:
   version "2.10.1"
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.10.1.tgz#06d22fae87ef0ce51c616c34a199726db1403b95"
   integrity sha512-Z2kKSk4AwWRQNCBmTjViuBQK0/Lx0jc25TZptn/2gKYUCOuVRvCekoA26u0Tsb3BIQ8tWDsZW14OwDlFUXW1aw==
+
+react-native-switchable@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-switchable/-/react-native-switchable-1.0.3.tgz#be3611720d96a3a2dc8dc7f51da8b4b05ab8ea04"
+  integrity sha512-R1xpmFGHe425MVGua3T2NBlfYiRgcpf6S/pI91y0uPoHTINFZNydM2hRDPLdgACh36r8Rq9yVOkFxNez5uj+nQ==
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-web@~0.13.12:
   version "0.13.18"
