@@ -12,6 +12,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Picker } from '@react-native-picker/picker';
+import Switchable from 'react-native-switchable';
 import {
   Container,
   Form,
@@ -22,10 +23,15 @@ import Background from './../../components/Background';
 import logo from './../../assets/icon.png';
 
 const styles = StyleSheet.create({
+  switch: {
+    width: '100%',
+    height: 40,
+    marginBottom: 10,
+  },
   viewScrool: {
     flex: 1,
-    paddingTop: 30,
-    paddingBottom: 30,
+    paddingTop: 16,
+    paddingBottom: 16,
     justifyContent: 'center',
   },
   input: {
@@ -65,6 +71,7 @@ export default function Config() {
   const [url, setUrl] = useState('');
   const [selectedNotice, setSelectedNotice] = useState(30);
   const [selectedZoom, setSelectedZoom] = useState(100);
+  const [warningSound, setWarningSound] = useState('Desativado');
 
   const navigation = useNavigation();
 
@@ -105,6 +112,10 @@ export default function Config() {
     );
   }
 
+  const toggleSwitch = (value, index) => {
+    setWarningSound(value);
+  }
+
   async function handleSubmit() {
     if (!url) {
       return openAlert();
@@ -117,6 +128,8 @@ export default function Config() {
 
       await AsyncStorage.setItem('@storage_zoom', String(selectedZoom));
 
+      await AsyncStorage.setItem('@storage_sound', String(warningSound));
+
       navigation.reset({
         index: 0,
         routes: [{
@@ -125,6 +138,7 @@ export default function Config() {
             url,
             seconds: selectedNotice,
             zoom: selectedZoom,
+            warningSound,
           },
         }],
       });
@@ -133,14 +147,28 @@ export default function Config() {
     }
   }
 
+  async function getWarningSound() {
+    const sound = await AsyncStorage.getItem('@storage_sound');
+
+    if (!sound) {
+      return setWarningSound('Desativado');
+    }
+
+    return setWarningSound(sound);
+  }
+
   async function getZoom() {
     const zoom = await AsyncStorage.getItem('@storage_zoom');
 
     if (!zoom) {
-      return setSelectedZoom(100);
+      setSelectedZoom(100);
+
+      return getWarningSound();
     }
 
-    return setSelectedZoom(Number(zoom));
+    setSelectedZoom(Number(zoom));
+
+    return getWarningSound();
   }
 
   async function getNotice() {
@@ -218,6 +246,14 @@ export default function Config() {
                   </View>
                 )
               }
+
+              <Text style={styles.label}>Aviso sonoro de nova senha</Text>
+              <Switchable
+                values={['Ativado', 'Desativado']}
+                styles={styles.switch}
+                onChange={toggleSwitch}
+                defaultValue={warningSound}
+              />
 
               <Text style={styles.label}>Zoom da página</Text>
               {

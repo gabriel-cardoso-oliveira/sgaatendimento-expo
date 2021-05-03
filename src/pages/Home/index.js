@@ -16,6 +16,7 @@ import { useRoute } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Modal from 'react-native-modal';
+import * as Speech from 'expo-speech';
 import { ShakeEventExpo } from './../../utils/ShakeEventExpo';
 import Background from './../../components/Background';
 import logo from './../../assets/shake.png';
@@ -83,6 +84,15 @@ export default function Main() {
 
   const routeParams = route.params;
 
+  const speak = () => {
+    if (routeParams.warningSound === 'Ativado') {
+      const thingToSay = 'Atenção. Nova senha!';
+      return Speech.speak(thingToSay);
+    }
+
+    return;
+  };
+
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
@@ -135,18 +145,20 @@ export default function Main() {
 
   const vibrate = () => {
     if (countVibration === 1) {
+      speak();
       return Vibration.vibrate();
     }
 
     if (countVibration === Number(routeParams.seconds)) {
-      setCountVibration(0);
+      setCountVibration(2);
+      speak();
       return Vibration.vibrate();
     }
   };
 
   const onResultWebView = event => {
-    // if (event.nativeEvent.title === 'DISCORD | Seu Lugar para Conversar e Ficar De Boa') {
-    if (event.nativeEvent.title === 'SGA *') {
+    if (event.nativeEvent.title === 'DISCORD | Seu Lugar para Conversar e Ficar De Boa') {
+    // if (event.nativeEvent.title === 'SGA *') {
       setIsWarning(true);
       shake();
       setCountVibration(countVibration + 1);

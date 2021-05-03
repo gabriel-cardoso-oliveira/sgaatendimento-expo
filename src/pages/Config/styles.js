@@ -16,7 +16,7 @@ export const Container = styled.KeyboardAvoidingView.attrs({
 
 export const Form = styled.View`
   align-self: stretch;
-  margin-top: 50px;
+  margin-top: 26px;
 `;
 
 export const FormInput = styled(Input)`

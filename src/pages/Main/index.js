@@ -15,8 +15,9 @@ export default function Main() {
       const getUrl = await AsyncStorage.getItem('@storage_url');
       const getNotice = await AsyncStorage.getItem('@storage_notice');
       const getZoom = await AsyncStorage.getItem('@storage_zoom');
+      const getSound = await AsyncStorage.getItem('@storage_sound');
 
-      if (!getUrl || !getNotice || !getZoom) {
+      if (!getUrl || !getNotice || !getZoom || !getSound) {
         return navigation.reset({
           index: 0,
           routes: [{ name: 'Config' }],
@@ -31,6 +32,7 @@ export default function Main() {
             url: getUrl,
             seconds: getNotice,
             zoom: getZoom,
+            warningSound: getSound,
           },
         }],
       });
