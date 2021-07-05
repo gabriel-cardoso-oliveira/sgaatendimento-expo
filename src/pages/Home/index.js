@@ -88,16 +88,7 @@ export default function Main() {
 
   BackgroundFetch.setMinimumIntervalAsync(1);
 
-  const taskName = 'background-alert'
-
-  const speak = () => {
-    if (routeParams.warningSound === 'Ativado') {
-      const thingToSay = 'Atenção. Nova senha!';
-      return Speech.speak(thingToSay);
-    }
-
-    return;
-  };
+  const taskName = 'background-alert';
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -157,21 +148,29 @@ export default function Main() {
     ).start();
   }, []);
 
+  function enableAudibleAlert() {
+    if (routeParams.warningSound === 'Ativado') {
+      const thingToSay = 'Atenção. Nova senha!';
+      return Speech.speak(thingToSay);
+    }
+
+    return;
+  }
+
   const vibrate = () => {
     if (countVibration === 1) {
-      speak();
+      enableAudibleAlert();
       return Vibration.vibrate();
     }
 
     if (countVibration === Number(routeParams.seconds)) {
       setCountVibration(2);
-      speak();
+      enableAudibleAlert();
       return Vibration.vibrate();
     }
   };
 
   const onResultWebView = event => {
-    // if (event.nativeEvent.title === 'DISCORD | Seu Lugar para Conversar e Ficar De Boa') {
     if (event.nativeEvent.title === 'SGA *') {
       setIsWarning(true);
       shake();
